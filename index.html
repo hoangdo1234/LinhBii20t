@@ -69,6 +69,7 @@
       opacity: 0.6;
     }
     canvas.fireworks {
+  display: none;
       position: fixed;
       top: 0;
       left: 0;
@@ -129,7 +130,7 @@
   
 
   <script>
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 20; i++) {
       const balloon = document.createElement('div');
       balloon.className = 'balloon';
       balloon.style.left = Math.random() * 100 + '%';
@@ -160,64 +161,8 @@
       }
     }, { once: true });
 
-    const canvas = document.querySelector(".fireworks");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    function random(min, max) {
-      return Math.random() * (max - min) + min;
-    }
-
-    function Firework(x, y) {
-      this.particles = [];
-      for (let i = 0; i < 30; i++) {
-        this.particles.push({
-          x: x,
-          y: y,
-          dx: random(-3, 3),
-          dy: random(-3, 3),
-          alpha: 1,
-          color: `hsl(${Math.random() * 360}, 100%, 70%)`
-        });
-      }
-    }
-
-    Firework.prototype.update = function () {
-      this.particles.forEach(p => {
-        p.x += p.dx;
-        p.y += p.dy;
-        p.alpha -= 0.02;
-      });
-      this.particles = this.particles.filter(p => p.alpha > 0);
-    };
-
-    Firework.prototype.draw = function () {
-      this.particles.forEach(p => {
-        ctx.globalAlpha = p.alpha;
-        ctx.fillStyle = p.color;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
-        ctx.fill();
-      });
-    };
-
-    let fireworks = [];
-
-    window.addEventListener("click", function (e) {
-      fireworks.push(new Firework(e.clientX, e.clientY));
-    });
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      fireworks.forEach(fw => {
-        fw.update();
-        fw.draw();
-      });
-      fireworks = fireworks.filter(fw => fw.particles.length > 0);
-      requestAnimationFrame(animate);
-    }
-    animate();
+    
   </script>
 </body>
 </html>
+
